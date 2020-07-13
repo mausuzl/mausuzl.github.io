@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{% load static %}  
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {% comment %} <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% endcomment %}
+
+
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" > 
+    <script src="{% static 'jquery/js/jquery-3.5.1.min.js' %}"></script> 
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>  
+
+    {% block head_block %}
+
+    {% endblock %}
+
+
+    <title>MAUS</title>
+</head>
+
+<body>
+    <div class="container-fullwidth">
+        <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'index' %}">Index</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'missionctrl_app:map' %}">Map</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mx-auto order-0">
+                <a class="navbar-brand mx-auto" href="https://maus-projekt.de/">
+                    <img src="{% static 'img/MAUS_Final_fit.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+                        MAUS
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    {% comment %} <li class="nav-item">
+                        <a class="nav-link" href="#">Right</a>
+                    </li> {% endcomment %}
+                    <li class="nav-item">
+                        <a class="nav-item nav-link" href="{% url 'admin:index' %}">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+    </div>
+    <div class="container">
+        {% block body_block %}
+
+        {% endblock %}
+    </div>
+
+</body>
+
+{% comment %} <footer class="footer mt-auto py-3">
+  <div class="container">
+    <span class="text-muted">MAUS Mission Planner</span>
+  </div>
+</footer> {% endcomment %}
+
+</html>

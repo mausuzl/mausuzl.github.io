@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+{% load static %}  
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {% comment %} <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% endcomment %}
+
+
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" >
+    <link rel="stylesheet"  href="{% static 'css/base_map.css' %}" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>  
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+
+    <script src="https://use.fontawesome.com/f1d8f8a830.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css" />
+    <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script>
+
+
+
+
+    <title>BASE</title>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="navbar-nav">
+                <a class="navbar-brand" href="#">test</a>
+                <a class="nav-item nav-link" href="{% url 'admin:index' %}">Admin</a>
+                <a class="nav-item nav-link" href="#"></a>
+            </div>
+        </nav>
+
+        {% block body_block %}
+
+        {% endblock %}
+    </div>
+
+    <div class="container">
+        <div id="map">
+            
+            <script>
+                var mymap = L.map('map', {attributionControl: false}).setView([51.505, -0.09], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                }).addTo(mymap);
+
+                var marker = L.marker([51.5, -0.09]).addTo(mymap);
+                var circle = L.circle([51.508, -0.11], {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.5,
+                    radius: 500
+                }).addTo(mymap);
+                var polygon = L.polygon([
+                    [51.509, -0.08],
+                    [51.503, -0.06],
+                    [51.51, -0.047]
+                ]).addTo(mymap);
+                marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+                circle.bindPopup("I am a circle.");
+                polygon.bindPopup("I am a polygon.");
+
+                var popup = L.popup();
+
+                {% comment %} function onMapClick(e) {
+                    popup
+                        .setLatLng(e.latlng)
+                        .setContent("You clicked the map at " + e.latlng.toString())
+                        .openOn(mymap);
+                } 
+
+                mymap.on('click', onMapClick); 
+
+
+                var latlngs = [
+                    [45.51, -122.68],
+                    [37.77, -122.43],
+                    [34.04, -118.2]
+                ];
+                var polyline = L.polyline(latlngs, {color: 'red'}).addTo(mymap);
+                {% comment %} // zoom the map to the polyline
+                mymap.fitBounds(polyline.getBounds()); {% endcomment %}
+
+
+                {% comment %} var helloPopup = L.popup().setContent('Hello World!'); {% endcomment %}
+{% comment %} 
+            L.easyButton('fa-globe', function(btn, map){
+                helloPopup.setLatLng(map.getCenter()).openOn(map);
+            }).addTo(mymap)
+
+            var stateChangingButton = L.easyButton({
+                states: [{
+                        stateName: 'zoom-to-forest',        // name the state
+                        icon:      'fa-tree',               // and define its properties
+                        title:     'zoom to a forest',      // like its title
+                        onClick: function(btn, map) {       // and its callback
+                            map.setView([46.25,-121.8],10);
+                            btn.state('zoom-to-school');    // change state on click!
+                        }
+                    }, {
+                        stateName: 'zoom-to-school',
+                        icon:      'fa-university',
+                        title:     'zoom to a school',
+                        onClick: function(btn, map) {
+                            map.setView([42.3748204,-71.1161913],16);
+                            btn.state('zoom-to-forest');
+                        }
+                }]
+            });
+
+            stateChangingButton.addTo(mymap); {% endcomment %}
+
+                            {% comment %} data = {
+                    'key1': 'value1',
+                    'key2': 'value2'
+                } {% endcomment %}
+                {% comment %} mymap.on('click', function(e){
+                    L.marker([e.latlng.lat,e.latlng.lng], { 
+                        draggable: true,
+                        autoPan: true}).addTo(mymap)
+                    data = {
+                        'key1': 'value1',
+                        'key2': 'value2'
+                    }
+                    $.ajax({
+                        "url": "/",
+                        "type": "post",
+                        "data": {
+                                "lat": e.latlng.lat,
+                                "lng": e.latlng.lng,
+                                csrfmiddlewaretoken: '{{ csrf_token }}'
+                        }
+                    })
+
+
+                }) {% endcomment %}
+            {% comment %} mymap.on('click',
+            function mapClickListen(e) {
+                var pos = e.latlng;
+                console.log('map click event');
+                var marker = L.marker(
+                pos, {
+                    draggable: true,
+                    autoPan: true
+                }
+                );
+                marker.on('click', function(e) {
+                console.log('clicked marker');
+                console.log(e.sourceTarget._leaflet_id)
+                });
+                marker.on('drag', function(e) {
+                console.log('marker drag event');
+                });
+                marker.on('dragstart', function(e) {
+                console.log('marker dragstart event');
+                mymap.off('click', mapClickListen);
+                });
+                marker.on('dragend', function(e) {
+                console.log('marker dragend event');
+                setTimeout(function() {
+                    mymap.on('click', mapClickListen);
+                }, 10);
+                });
+                marker.addTo(mymap);
+            }
+); {% endcomment %}
+    
+
+    {% comment %} var latlngs = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];
+var polygon = L.polygon(latlngs, {color: 'red'}).addTo(mymap);
+// zoom the map to the polygon
+mymap.fitBounds(polygon.getBounds()); {% endcomment %}
+
+
+// add leaflet-geoman controls with some options to the map
+mymap.pm.addControls({
+  position: 'topleft',
+  drawCircle: false,
+});
+
+mymap.on('pm:edit', e => {
+  console.log(e);
+});
+
+var vertex_global
+var layer_global
+mymap.on('pm:create', e => {
+  console.log(e);
+  console.log(e.layer)
+  layer_global = e.layer
+  e.layer.pm.enable({
+        allowSelfIntersection: false,
+  });
+
+  e.layer.on('pm:vertexadded', e => {
+      console.log(e)
+      vertex_global = e
+      console.log(e.indexPath)
+  })
+});
+
+
+
+{% comment %} polygon.pm.enable({
+  allowSelfIntersection: false,
+}); {% endcomment %}
+
+var draw_global
+mymap.on('pm:drawstart', ({ workingLayer }) => {
+  workingLayer.on('pm:vertexadded', e => {
+    workingLayer.pm.enable
+    console.log(e);
+    draw_global = e
+  });
+});
+
+var geojson = {
+    "name":"NewFeatureType",
+    "type":"FeatureCollection",
+    "features":[{
+        "type":"Feature",
+        "geometry":{
+            "type":"LineString",
+            "coordinates":[]
+        },
+        "properties":null
+    }]
+};
+
+
+            </script>
+
+<style>
+{% comment %} body {
+  background-color: linen;
+}
+
+h1 {
+  color: maroon;
+  margin-left: 40px;
+} {% endcomment %}
+
+  
+.marker-icon,
+.marker-icon:focus {
+  background-color: #ffffff;
+  border: 1px solid #3388ff;
+  border-radius: 50%;
+  margin: -8px 0 0 -8px !important;
+  width: 14px !important;
+  height: 14px !important;
+  outline: 0;
+  transition: opacity ease 0.3s;
+}
+
+.marker-icon-middle,
+.marker-icon-middle:focus {
+  opacity: 0.5;
+  border-radius: 0%;
+  margin: -6px 0 0 -6px !important;
+  width: 8px !important;
+  height: 8px !important;
+}
+
+
+
+</style>
+        
+        </div>
+    </div>
+
+
+
+
+
+
+</body>
+
+</html>

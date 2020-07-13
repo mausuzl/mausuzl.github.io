@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+  <script src="static/jquery/js/jquery-3.5.1.min.js"></script>
+  <script src="static/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="static/leaflet/css/leaflet.css">
+  <script src="static/leaflet/js/leaflet.js"></script>
+  <link rel="stylesheet" href="static/leaflet/css/leaflet-geoman.css">
+  <script src="static/leaflet/js/leaflet-geoman.min.js"></script>
+
+
+  <link rel="stylesheet" href="static/css/base_map.css">
+
+
+  <title>MAUS</title>
+</head>
+
+<body>
+  <div class="container-fullwidth">
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+      <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.html">Index</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="map.html">Map</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+        </ul>
+      </div>
+      <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="https://maus-projekt.de/">
+          <img src="static/img/MAUS_Final_fit.svg" width="30" height="30" class="d-inline-block align-top" alt=""
+            loading="lazy">
+          MAUS
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-item nav-link" href="#">Admin</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+  </div>
+
+  <div class="jumbotron">
+    <h1>Mission Planner</h1>
+    <p class="lead">Here is the place where missions are planned. Click on <em>Current Mission:</em> to see a form for
+      basic mission parameters. On the map you can add markers, polylines and polygons. You can later add more nodes to
+      a struct by clicking on the intersects between two nodes. Each node has a popup to specify target height and AUV
+      speed. These are taken from the default parameters defined under <em>Current Mission:</em>. You can remove nodes
+      by right-clicking,</p>
+    <hr class="my-4">
+    <p>Some ToDo's:
+    </p>
+    <ul>
+      <li>Backend is not connected in this version - so forms are not working at the moment.</li>
+      <li>Numbered markers for the structs to give better visibility of the sequence of waypoints.</li>
+      <li>Path-planning inside of a polygon. Current work focused on rectangles that can be stretched and rotated.</li>
+      <li>Tree and form based alternative input system to just clicking around inside the map.</li>
+    </ul>
+  </div>
+
+
+
+  <div class="accordion" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-secondary btn-block text-left" type="button" data-toggle="collapse"
+            data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" data-placement="top"
+            title="Expand to choose current mission and set general parameters." data-tooltip="true">
+            Current Mission:
+          </button>
+        </h2>
+      </div>
+
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+
+
+          <div class="container">
+            <div class="input-group input-group-sm mb-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Name</span>
+              </div>
+              <input type="text" class="form-control" placeholder="?_Loading" aria-label="Username"
+                aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group input-group-sm mb-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">Time Limit</span>
+              </div>
+              <input type="text" class="form-control" placeholder="?_Loading" aria-label="Age"
+                aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group input-group-sm mb-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Default Speed</span>
+              </div>
+              <input type="text" class="form-control" placeholder="?_Loading" aria-label="Stuff"
+                aria-describedby="basic-addon1" onkeyup="formChanged()" onchange="formChanged()">
+            </div>
+            <div class="input-group input-group-sm mb-1">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon4">Default Height</span>
+              </div>
+              <input type="text" class="form-control" placeholder="?_Loading" aria-label="Stuff"
+                aria-describedby="basic-addon1" onkeyup="formChanged()" onchange="formChanged()">
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+
+  <div class="container">
+    <div id="map">
+
+
+    </div>
+  </div>
+
+
+  <script src="static/js/map_and_events.js"></script>
+
+</body>
+
+<!-- <footer class="footer mt-auto py-3">
+  <div class="container">
+    <span class="text-muted">MAUS Mission Planner</span>
+  </div>
+</footer> -->
+
+</html>
