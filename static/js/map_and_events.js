@@ -79,7 +79,7 @@ geojsonLayer.on('layeradd', (e) => {
     }
 
     geojsonLayer.pm.enable()
-    addPopup(e)
+    addPopup(geojsonLayer)
 
     e.layer.on('pm:vertexadded', e => {
         let idx
@@ -152,15 +152,22 @@ function getCorrespondingLayer(id) {
 }
 
 
-function addPopup(element) {
-    if (element.layer.feature["geometry"]["type"] === "Polygon") {
-        element.layer.bindPopup(template_popup)
-    } else if (element.layer.feature["geometry"]["type"] === "LineString") {
-        console.log(element.layer)
-        element.layer.pm._markers.forEach(m => {
-            m.bindPopup(template_popup)
-        });
-    }
+function addPopup(layerGroup) {
+
+
+    layerGroup.getLayers().forEach(l => {
+        console.log(l.feature)
+        if (l.feature["geometry"]["type"] === "Polygon") {
+            l.bindPopup(template_popup)
+        } else if (l.feature["geometry"]["type"] === "LineString") {
+            l.pm._markers.forEach(m => {
+                m.bindPopup(template_popup)
+            });
+
+        }
+    })
+
+
 }
 
 var template_popup = '<div class="container">\
